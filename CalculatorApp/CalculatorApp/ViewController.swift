@@ -97,11 +97,13 @@ class ViewController: UIViewController {
             let button = UIButton()
             button.setTitle(title, for: .normal)
             button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-            button.backgroundColor = UIColor(red: 50/255, green: 58/255, blue: 58/255, alpha: 1.0)
-            button.layer.cornerRadius = 4
+            // 연산버튼이면 오렌지색으로 설정하도록 삼항연산자 사용
+            button.backgroundColor = (["+", "-", "*","AC", "/", "="].contains(title)) ?
+                UIColor.orange : UIColor(red: 50/255, green: 58/255, blue: 58/255, alpha: 1.0)
+            // 스택뷰의 높이, 너비에 따라 현재 버튼이 80,80 으로 맞춰져 있기에 cornerRadius 40 설정 시 원형으로 나타남
+            button.layer.cornerRadius = 40
             
-            // button.snp.makeConstraints { $0.height.width.equalTo(80) }
-            // 버튼의 크기를 따로 지정해주지 않아도 스택뷰의 fillEqually 가 크기를 자동으로 정해줌
+           
             return button
         }
     }
@@ -114,13 +116,8 @@ class ViewController: UIViewController {
         stackView.backgroundColor = .black
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        //  stackView.alignment = .fill
-        // distribution 을 fillEqually 로 설정했기 때문에 alignment를 따로 설정하게되면 가로스택뷰의 버튼 높이가 달라질 수 있다.
         stackView.spacing = 10
         
-        //  stackView.snp.makeConstraints { $0.height.equalTo(80) }
-        // Lv2에서는 가로스택뷰만 만들었기 때문에 사용했지만
-        // 세로 스택뷰에 넣게 되면서 버튼의 크기를 따로 지정해주지 않아도 스택뷰의 fillEqually 가 크기를 자동으로 정해줌
         return stackView
     }
     
