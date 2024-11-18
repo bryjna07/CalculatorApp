@@ -13,8 +13,6 @@ class ViewController: UIViewController {
     // 레이블 생성
     let label = UILabel()
     
-    let hstackview = UIStackView()
-    
     // 버튼 4개 생성하기
     let button1 = UIButton()
     let button2 = UIButton()
@@ -26,7 +24,6 @@ class ViewController: UIViewController {
         
         // viewDidLoad 될 때 configureUI 실행하여 라벨이 보이도록 함
         configureUI()
-        //        makeHorizontalStackView()
         
         
     }
@@ -41,14 +38,6 @@ class ViewController: UIViewController {
         label.textColor = .white
         label.font = .boldSystemFont(ofSize: 60)
         label.textAlignment = .right
-        
-        // Lv 2 UIStackView 를 사용하여 4개의 버튼 추가하기 ( horizontalStackView )
-        // 스택뷰를 깔고 그위에 버튼을 4개 깐다 ?
-        hstackview.backgroundColor = .black
-        hstackview.axis = .horizontal
-        hstackview.distribution = .fillEqually
-        hstackview.alignment = .center
-        hstackview.spacing = 10
         
         // 버튼 특성 설정
         button1.backgroundColor = UIColor(red: 50/255, green: 58/255, blue: 58/255, alpha: 1.0)
@@ -67,7 +56,9 @@ class ViewController: UIViewController {
         button4.setTitle("+", for: .normal)
         button4.layer.cornerRadius = 4
         
+        let buttons = [button1, button2, button3, button4]
         
+        let hstackview = makeHorizontalStackView(buttons)
         
         // addSubview 추가로 나타나게 함 ( 클로저 사용으로 추후 추가될 것들에 재사용성 대비 )
         [label, hstackview]
@@ -93,28 +84,18 @@ class ViewController: UIViewController {
             $0.width.equalTo(label.snp.width)
         }
         
-        // 버튼 크기 설정
-        button1.snp.makeConstraints {
-            $0.height.width.equalTo(80)
-        }
-        
-        button2.snp.makeConstraints {
-            $0.height.width.equalTo(80)
-        }
-        
-        button3.snp.makeConstraints {
-            $0.height.width.equalTo(80)
-        }
-        
-        button4.snp.makeConstraints {
-            $0.height.width.equalTo(80)
-        }
-        
     }
     
-    // horizontalStackView 생성하는 메서드
-    //    private func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
-    //
-    //    }
-    //
+   //  horizontalStackView 생성하는 메서드
+        private func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
+            let stackView = UIStackView(arrangedSubviews: views)
+            stackView.backgroundColor = .black
+            stackView.axis = .horizontal
+            stackView.distribution = .fillEqually
+            stackView.spacing = 10
+            
+            views.forEach { stackView.addArrangedSubview($0) }
+            return stackView
+        }
+    
 }
