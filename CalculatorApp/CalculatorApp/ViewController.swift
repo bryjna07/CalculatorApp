@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     // 레이블 생성
     let label = UILabel()
     
-    // 버튼 4개 생성하기
+    // 버튼 생성하기
     let button1 = UIButton()
     let button2 = UIButton()
     let button3 = UIButton()
@@ -114,7 +114,7 @@ class ViewController: UIViewController {
         stackView.backgroundColor = .black
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        // stackView.alignment = .fill
+        //  stackView.alignment = .fill
         // distribution 을 fillEqually 로 설정했기 때문에 alignment를 따로 설정하게되면 가로스택뷰의 버튼 높이가 달라질 수 있다.
         stackView.spacing = 10
         
@@ -125,3 +125,4 @@ class ViewController: UIViewController {
     }
     
 }
+
