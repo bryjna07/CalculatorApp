@@ -13,21 +13,21 @@ class ViewController: UIViewController {
     // 레이블 생성
     let label = UILabel()
     
-    // 버튼 생성하기
-    let button1 = UIButton()
-    let button2 = UIButton()
-    let button3 = UIButton()
-    let button4 = UIButton()
-    
-    let button5 = UIButton()
-    let button6 = UIButton()
-    let button7 = UIButton()
-    let button8 = UIButton()
-    
-    let button9 = UIButton()
-    let button10 = UIButton()
-    let button11 = UIButton()
-    let button12 = UIButton()
+    // 버튼 생성하기    UI만 구현하는 데에는 저장속성을 따로 설정해주지 않아도 된다는 것을 확인함.
+//    let button1 = UIButton()
+//    let button2 = UIButton()
+//    let button3 = UIButton()
+//    let button4 = UIButton()
+//    
+//    let button5 = UIButton()
+//    let button6 = UIButton()
+//    let button7 = UIButton()
+//    let button8 = UIButton()
+//    
+//    let button9 = UIButton()
+//    let button10 = UIButton()
+//    let button11 = UIButton()
+//    let button12 = UIButton()
     
     // verticalStackView 생성
     // Lv2 와 다르게 버티컬스택뷰만 만듦, 가로스택뷰를 위에 올리기만 하면 되기 때문
