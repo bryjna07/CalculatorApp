@@ -13,25 +13,12 @@ class ViewController: UIViewController {
     // 레이블 생성
     let label = UILabel()
     
-    // 버튼 생성하기    UI만 구현하는 데에는 저장속성을 따로 설정해주지 않아도 된다는 것을 확인함.
-//    let button1 = UIButton()
-//    let button2 = UIButton()
-//    let button3 = UIButton()
-//    let button4 = UIButton()
-//    
-//    let button5 = UIButton()
-//    let button6 = UIButton()
-//    let button7 = UIButton()
-//    let button8 = UIButton()
-//    
-//    let button9 = UIButton()
-//    let button10 = UIButton()
-//    let button11 = UIButton()
-//    let button12 = UIButton()
-    
     // verticalStackView 생성
     // Lv2 와 다르게 버티컬스택뷰만 만듦, 가로스택뷰를 위에 올리기만 하면 되기 때문
     let vstackView = UIStackView()
+    
+    // 변수로 레이블의 기본 텍스트 값을 0 으로 만들어줌
+    var currentText = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +35,7 @@ class ViewController: UIViewController {
         view.backgroundColor = .black
         
         // 레이블 특성 관련
-        label.text = "12345"
+        label.text = "0"
         label.textColor = .white
         label.font = .boldSystemFont(ofSize: 60)
         label.textAlignment = .right
@@ -90,6 +77,7 @@ class ViewController: UIViewController {
         }
         
     }
+    // MARK: - 생성 및 특성설정 메서드
     
     // 버튼 생성 메서드
     private func createButtons(titles: [String]) -> [UIButton] {
@@ -99,15 +87,16 @@ class ViewController: UIViewController {
             button.titleLabel?.font = .boldSystemFont(ofSize: 30)
             // 연산버튼이면 오렌지색으로 설정하도록 삼항연산자 사용
             button.backgroundColor = (["+", "-", "*","AC", "/", "="].contains(title)) ?
-                UIColor.orange : UIColor(red: 50/255, green: 58/255, blue: 58/255, alpha: 1.0)
+            UIColor.orange : UIColor(red: 50/255, green: 58/255, blue: 58/255, alpha: 1.0)
             // 스택뷰의 높이, 너비에 따라 현재 버튼이 80,80 으로 맞춰져 있기에 cornerRadius 40 설정 시 원형으로 나타남
             button.layer.cornerRadius = 40
+            // 버튼 액션이 가능하도록 해주는 코드
+            button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
             
-           
+            
             return button
         }
     }
-    
     
     // horizontalStackView 생성하는 메서드
     private func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
@@ -120,6 +109,50 @@ class ViewController: UIViewController {
         
         return stackView
     }
+    // MARK: - 버튼 연산 관련
+    
+    // 버튼이 눌렸을 때에 대한 메서드
+    @objc func buttonTapped(sender: UIButton) {
+        // currentTitle 이 nil 이 아니면
+        guard let buttonText = sender.currentTitle else { return }
+        
+        // AC 누르면 0 으로 ,  = 을 누르면 연산한 값으로 , 0 인 상태에서 버튼을 누르면 레이블에 표시
+        if buttonText == "AC" {
+            currentText = "0"
+        } else if buttonText == "=" {
+            currentText = String(calculate(expression: currentText) ?? 0)
+        } else {
+            if currentText == "0" {
+                currentText = buttonText
+            } else {
+                currentText += buttonText
+            }
+        }
+        
+        updateLabel()
+        
+    }
+    // 연산 메서드
+    func calculate(expression: String) -> Int? {
+        let expression = NSExpression(format: expression)
+        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result
+        } else {
+            return nil
+        }
+    }
+    
+    func updateLabel() {
+        // 필요시 0 을 제거 , 레이블에 표시되는 텍스트를 업데이트 해주는 메서드
+        if currentText.hasPrefix("0") && currentText.count > 1 {
+            // 앞에 0 이 있고 두자리 이상일때 dropFirst : 맨앞에 0을 날려라
+            currentText = String(currentText.dropFirst())
+        }
+        
+        label.text = currentText
+    }
+    
+    
     
 }
 
